@@ -12,6 +12,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Show test files in CI
+        run: |
+          echo "Listing files in cypress/e2e:"
+          ls -la cypress/e2e
+          
       - name: Run Cypress with specific spec
         uses: cypress-io/github-action@v6
         continue-on-error: true  # ← allows the next steps to run even if this fails
