@@ -12,19 +12,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Show test files in CI
+      - name: List available test files
+        run: ls -la cypress/e2e
+
+      - name: Run selected Cypress specs directly
         run: |
-          echo "Listing files in cypress/e2e:"
-          ls -la cypress/e2e
-          
-      - name: Run Cypress with specific spec
-        uses: cypress-io/github-action@v6
-        continue-on-error: true  # ← allows the next steps to run even if this fails
-        with:
-          command: npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/createConversation.cy.js"
+          echo "Running specific specs"
+          npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/addExistingMember.cy.js,cypress/e2e/createConversation.cy.js"
+        continue-on-error: true
 
       - name: Upload Cypress JSON report
-        if: always()  # ← forces this step to always run
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-json-report
