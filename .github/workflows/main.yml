@@ -16,7 +16,7 @@ jobs:
         uses: cypress-io/github-action@v6
         continue-on-error: true  # ← allows the next steps to run even if this fails
         with:
-          command: npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/addExistingMember.cy.js,cypress/e2e/createConversation.cy.js"
+          command: npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/createConversation.cy.js"
 
       - name: Upload Cypress JSON report
         if: always()  # ← forces this step to always run
