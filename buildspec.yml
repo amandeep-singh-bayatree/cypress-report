@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18 # ⬅️ Use Node.js 18
+    commands:
+      - npm ci # ⬅️ Install exact versions from package-lock.json
+
+  pre_build:
+    commands:
+      - echo "Starting Cypress tests" # ⬅️ Just a log message
+
+  build:
+    commands:
+      - npx cypress run --reporter mochawesome # ⬅️ Run Cypress tests with reporter
+      - npx mochawesome-merge cypress/reports/*.json > mochawesome-report.json # ⬅️ Merge all reports
+
+  post_build:
+    commands:
+      - echo "Uploading reports to S3" # ⬅️ Another log
+      - aws s3 cp mochawesome-report.json s3://my-cypress-reports-bucket/reports/mochawesome-report-$(date +%Y-%m-%d-%H-%M).json
+        # ⬆️ Upload merged report with timestamp to S3
+
+artifacts:
+  files:
+    - mochawesome-report.json # ⬅️ Store it as build artifact
