@@ -16,7 +16,7 @@ jobs:
   uses: cypress-io/github-action@v6
   with:
     command: |
-      echo "Available specs:" && ls -l cypress/e2e
+      echo "Available specs: " && ls -l cypress/e2e
       npx cypress run \
         --spec cypress/e2e/loginPage.cy.js \
         --spec cypress/e2e/addExistingMember.cy.js \
