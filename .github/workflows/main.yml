@@ -12,19 +12,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run selected Cypress specs
+      - name: Run Cypress with specific spec
         uses: cypress-io/github-action@v6
         with:
-          command: |
-            echo "Available specs:" && ls -l cypress/e2e
-            npx cypress run \
-              --spec cypress/e2e/loginPage.cy.js \
-              --spec cypress/e2e/addExistingMember.cy.js \
-              --spec cypress/e2e/createConversation.cy.js
-        continue-on-error: true  # allows next steps to run even if tests fail
+          command: 
+            echo "Available specs:" && ls -al cypress/e2e/
+            npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/addExistingMember.cy.js,cypress/e2e/createConversation.cy.js"
+        continue-on-error: true  # ← allows the next steps to run even if this fails
 
       - name: Upload Cypress JSON report
-        if: always()  # forces this to run even if previous step failed
+        if: always()  # ← forces this step to always run
         uses: actions/upload-artifact@v4
         with:
           name: cypress-json-report
