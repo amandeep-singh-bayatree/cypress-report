@@ -6,7 +6,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install dependencies
@@ -15,13 +15,31 @@ jobs:
       - name: List available test files
         run: ls -la cypress/e2e
 
-      - name: Run selected Cypress specs directly
+      - name: Run selected Cypress specs
         run: |
-          echo "Running specific specs"
+          echo "Running selected specs..."
           npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/addExistingMember.cy.js,cypress/e2e/createConversation.cy.js"
         continue-on-error: true
 
-      - name: Upload Cypress JSON report
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Upload JSON reports to S3
+        if: always()
+        run: |
+          echo "Uploading Cypress JSON reports to S3..."
+          for file in cypress/reports/*.json; do
+            echo "Uploading $file..."
+            aws s3 cp "$file" "s3://projects-test-reports/cypress-reports/$(basename "$file")"
+          done
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Upload reports as GitHub artifact (optional)
         if: always()
         uses: actions/upload-artifact@v4
         with:
