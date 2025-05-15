@@ -2,6 +2,8 @@
 
 This repository contains automated Cypress tests that run on a schedule using **GitHub Actions**. The JSON reports generated from the test runs are uploaded to an **Amazon S3 bucket**, and a `filenames.json` file is maintained to track all uploaded report filenames.
 
+**Dashboard link:** [http://projects-test-reports.s3-website-us-east-1.amazonaws.com/](http://projects-test-reports.s3-website-us-east-1.amazonaws.com/)
+
 ## 🔧 Features
 
 - Runs selected Cypress specs on a **daily schedule (12:00 AM Asia/Kolkata)**
