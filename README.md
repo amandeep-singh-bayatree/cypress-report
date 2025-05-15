@@ -73,6 +73,6 @@ Each run uploads:
 
 ## ✅ Notes
 
-- ✅ Works in private repositories
+- ✅ Works in public repositories, for private repositories need paid plan
 - 🕒 Runs daily at 12:00 AM IST (Asia/Kolkata) via cron
 - 🔒 All AWS credentials are securely stored in GitHub Secrets
