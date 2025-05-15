@@ -5,6 +5,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,8 +22,11 @@ jobs:
           npx cypress run --spec "cypress/e2e/loginPage.cy.js,cypress/e2e/addExistingMember.cy.js,cypress/e2e/createConversation.cy.js"
         continue-on-error: true
 
-      - name: Install AWS CLI
-        run: aws --version
+      - name: Install AWS CLI and jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          aws --version
 
       - name: Upload JSON reports to S3
         if: always()
@@ -32,6 +36,30 @@ jobs:
             echo "Uploading $file..."
             aws s3 cp "$file" "s3://projects-test-reports/hxc/$(basename "$file")"
           done
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Download filenames.json from S3 or create new
+        run: |
+          aws s3 cp "s3://projects-test-reports/hxc/filenames.json" filenames.json || echo '{"projectName":"HXC","filenames":[]}' > filenames.json
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Update filenames.json with new report files
+        run: |
+          for file in cypress/reports/*.json; do
+            fname=$(basename "$file")
+            jq --arg fname "$fname" 'if .filenames | index($fname) then . else .filenames += [$fname] end' \
+              filenames.json > tmp.json && mv tmp.json filenames.json
+          done
+
+      - name: Upload updated filenames.json to S3
+        run: |
+          aws s3 cp filenames.json "s3://projects-test-reports/hxc/filenames.json"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
