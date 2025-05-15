@@ -1,4 +1,4 @@
-import { messagesToSend, convoName, users } from "../fixtures/chatConfig";
+import { messagesToSend, convoName, users } from "../../fixtures/chatConfig";
 
 describe("Chat Interaction: Sending and Receiving Messages", () => {
 

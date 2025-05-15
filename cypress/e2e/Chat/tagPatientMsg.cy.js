@@ -1,4 +1,4 @@
-import testConfig from "../fixtures/tagsMultiUserConfig";
+import testConfig from "../../fixtures/tagsMultiUserConfig";
 
 describe("Workflow Tag Verification", () => {
   describe("First User - Tag Message", () => {

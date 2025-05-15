@@ -1,4 +1,4 @@
-import testData from '../support/testData';
+import testData from '../../support/testData';
 
 describe("Login, Archive and Unarchive Conversation", () => {
     before(() => {

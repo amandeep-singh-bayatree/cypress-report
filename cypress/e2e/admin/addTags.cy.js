@@ -1,11 +1,11 @@
 describe('Complete Tag Creation Workflow', () => {
   const tags = [
-    { name: 'Patient Onboarding', type: 'Workflow' },
-    { name: 'Therapy Assessment', type: 'Treatment' },
-    { name: 'Endocrinology', type: 'Topics' },
-    { name: 'Arthritis', type: 'Conditions' },
-    { name: 'Coverage Check', type: 'CustomTag1' },
-    { name: 'Study Enrollment', type: 'CustomTag2' }
+    { name: 'Pati', type: 'Workflow' },
+    { name: 'Thera', type: 'Treatment' },
+    { name: 'Endo', type: 'Topics' },
+    { name: 'Arth', type: 'Conditions' },
+    { name: 'Cover Check', type: 'CustomTag1' },
+    { name: 'Enroll', type: 'CustomTag2' }
   ];
   
   

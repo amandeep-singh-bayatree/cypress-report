@@ -2,7 +2,7 @@ import users from "../../fixtures/users";
 
 describe("User Login Verification Test", () => {
   users.forEach((user) => {
-    it.skip(`verifies login for ${user.phoneNumber}`, () => {
+    it(`verifies login for ${user.phoneNumber}`, () => {
       // Step 1: Visit login page
       cy.visit("https://develop.di9bb30rgpciu.amplifyapp.com/login");
       

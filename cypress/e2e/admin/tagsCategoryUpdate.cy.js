@@ -3,7 +3,7 @@ describe('Update Tag Category Alias Names', () => {
     { categoryName: 'Topics', newAlias: 'Topics-1' },
     { categoryName: 'Treatment', newAlias: 'Treatment-1' },
     { categoryName: 'Workflow', newAlias: 'Workflow-1' },
-    { categoryName: 'Conditions', newAlias: 'Conditions-1' },
+    { categoryName: 'Condition', newAlias: 'Conditions-1' },
     { categoryName: 'CustomTag1', newAlias: 'CustomTag1-1' },
     { categoryName: 'CustomTag2', newAlias: 'CustomTag2-1' }
   ];

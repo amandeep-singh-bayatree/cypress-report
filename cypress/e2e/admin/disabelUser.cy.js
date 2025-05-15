@@ -1,7 +1,7 @@
-const disableUserData = require("../../fixtures/disableUserData")
+const disableUserData = require("../../fixtures/disableUserData");
 
-describe("Disable User and Verify Login Blocked", () => {
-  it("should disable the user and prevent login", () => {
+describe("Disable User, Verify Login Blocked, and Re-enable User", () => {
+  it("should disable the user, verify login is blocked, then re-enable the user", () => {
     // 🌐 Visit login page
     cy.visit("https://develop.di9bb30rgpciu.amplifyapp.com/login");
 
@@ -66,5 +66,37 @@ describe("Disable User and Verify Login Blocked", () => {
     cy.get("button.theme-btn.mobLoginBtn.btn.btn-primary")
       .contains("ok")
       .click({ force: true });
+
+    // 🔐 Re-login as Admin to re-enable user
+    cy.get('button[aria-label="Select country"]').click();
+    cy.get('li[data-country-code="in"]').click();
+    cy.get('input[type="tel"]').clear().type("919300000000");
+    cy.contains("button", "Get OTP").click();
+    cy.get('input[type="text"]').type("123456");
+    cy.contains("button", "Submit").click();
+
+    // ✅ Ensure we're on chat page again
+    cy.url().should("include", "/chat");
+
+    // ⚙️ Go to Admin page again
+    cy.get("button.btn.not-selected.btn-secondary.btn-sm").click();
+
+    // 🔍 Search for the user again
+    cy.get("input#search-text").type(disableUserData.targetUserSearchKeyword, { force: true });
+    cy.get('i.flaticon-381-search-2[title="Search"]').click({ force: true });
+
+    // ✅ Re-enable target user
+    cy.contains("td", disableUserData.targetUserFullName, { timeout: 10000 })
+    .should("be.visible")
+    .parent("tr")
+    .within(() => {
+      cy.get('button[title="User Deactive"]').click({ force: true });
+    });
+    // ✅ Confirm re-enable modal
+    cy.get(".modal-dialog", { timeout: 5000 }).should("be.visible");
+    cy.contains(".modal-footer button", "Ok").click({ force: true });
+
+    // 🔔 Wait for re-enable success toast
+    cy.contains(`${disableUserData.targetUserFullName} is enabled !`, { timeout: 10000 }).should("be.visible");
   });
 });

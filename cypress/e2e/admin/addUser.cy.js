@@ -20,7 +20,7 @@ describe("Complete User Flow Test", () => {
   });
 
   users.forEach((user, index) => {
-    it.skip(`should add ${user.userRole}: ${user.firstName} ${user.lastName}`, () => {
+    it(`should add ${user.userRole}: ${user.firstName} ${user.lastName}`, () => {
       cy.get('input[name="firstName"]').type(user.firstName);
       cy.get('input[name="lastName"]').type(user.lastName);
       cy.get('input[name="phoneNumber"]').clear().type(user.phoneNumber);

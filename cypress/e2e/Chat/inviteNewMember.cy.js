@@ -1,4 +1,4 @@
-import { inviteNewMemberConfig } from "../fixtures/inviteMemberConfig"; // update path as needed
+import { inviteNewMemberConfig } from "../../fixtures/inviteMemberConfig"; // update path as needed
 
 const { baseUrl, login, newMember } = inviteNewMemberConfig;
 
