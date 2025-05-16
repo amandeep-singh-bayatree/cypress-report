@@ -73,6 +73,7 @@ Each run uploads:
 
 ## ✅ Notes
 
-- ✅ Works in public repositories, for private repositories need paid plan
-- 🕒 Runs daily at 12:00 AM IST (Asia/Kolkata) via cron
-- 🔒 All AWS credentials are securely stored in GitHub Secrets
+- Works in public repositories, for private repositories need paid plan
+- Runs daily at 12:00 AM IST (Asia/Kolkata) via cron
+- All AWS credentials are securely stored in GitHub Secrets
+- You have to change the project name in s3 bucket url (e.g. s3://your-bucket-name/<project name>/filenames.json)
