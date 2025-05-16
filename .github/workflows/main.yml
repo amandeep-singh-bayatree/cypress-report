@@ -2,7 +2,7 @@ name: Cypress Tests
 
 on: 
   schedule:
-    - cron: '0 6 * * *' # Runs at 12:00 PM IST (06:30 UTC) - Note: Scheduled workflows only run if the default branch has had a commit within the last 90 days (GitHub policy to prevent resource drain).
+    - cron: '30 7 * * *' # Runs at 12:00 PM IST (06:30 UTC) - Note: Scheduled workflows only run if the default branch has had a commit within the last 90 days (GitHub policy to prevent resource drain).
 
 jobs:
   cypress-run:

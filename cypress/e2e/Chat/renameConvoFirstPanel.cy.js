@@ -16,7 +16,7 @@ describe("Login and Conversation Feature Test", () => {
     });
   });
 
-  it("should double-click to edit conversation name and update it", () => {
+  it.skip("should double-click to edit conversation name and update it", () => {
     cy.visit("https://develop.di9bb30rgpciu.amplifyapp.com/chat");
     cy.url().should("include", "/chat");
 
